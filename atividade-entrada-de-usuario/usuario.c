@@ -9,6 +9,7 @@
 typedef struct {
     char nome[MAX_NOME];
     char senha[MAX_SENHA];
+    // Podemos adicionar mais informações se necessário
 } Usuario;
 
 void cadastrarUsuario();
@@ -17,12 +18,14 @@ void alterarSenha();
 void excluirUsuario();
 void carregarUsuarios();
 void salvarUsuarios();
+void menuCliente();
+void areaCliente(int index);
 
 Usuario usuarios[MAX_USUARIOS];
 int totalUsuarios = 0;
 
 int main() {
-    int opcao, logado = 0;
+    int opcao, logado = -1;
 
     carregarUsuarios();
 
@@ -33,6 +36,7 @@ int main() {
         printf("3. Alterar senha\n");
         printf("4. Excluir usuário\n");
         printf("5. Sair\n");
+        printf("6. Menu do Cliente\n");
         printf("Escolha uma opção: ");
         scanf("%d", &opcao);
 
@@ -44,16 +48,20 @@ int main() {
                 logado = loginUsuario();
                 break;
             case 3:
-                if (logado) alterarSenha();
+                if (logado != -1) alterarSenha();
                 else printf("Você precisa fazer login primeiro!\n");
                 break;
             case 4:
-                if (logado) excluirUsuario();
+                if (logado != -1) excluirUsuario();
                 else printf("Você precisa fazer login primeiro!\n");
                 break;
             case 5:
                 salvarUsuarios();
                 printf("Saindo...\n");
+                break;
+            case 6:
+                if (logado != -1) menuCliente(logado);
+                else printf("Você precisa fazer login primeiro!\n");
                 break;
             default:
                 printf("Opção inválida!\n");
@@ -101,12 +109,12 @@ int loginUsuario() {
     for (int i = 0; i < totalUsuarios; i++) {
         if (strcmp(usuarios[i].nome, nome) == 0 && strcmp(usuarios[i].senha, senha) == 0) {
             printf("Login realizado com sucesso!\n");
-            return 1;
+            return i;
         }
     }
 
     printf("Usuário ou senha incorretos!\n");
-    return 0;
+    return -1;
 }
 
 void alterarSenha() {
@@ -171,4 +179,60 @@ void salvarUsuarios() {
     }
 
     fclose(file);
+}
+
+void menuCliente(int index) {
+    int opcaoCliente;
+
+    do {
+        printf("\n--- Menu do Cliente ---\n");
+        printf("1. Ver perfil\n");
+        printf("2. Acessar área do cliente\n");
+        printf("3. Sair do Menu do Cliente\n");
+        printf("Escolha uma opção: ");
+        scanf("%d", &opcaoCliente);
+
+        switch(opcaoCliente) {
+            case 1:
+                printf("Exibindo perfil do cliente %s...\n", usuarios[index].nome);
+                break;
+            case 2:
+                areaCliente(index);
+                break;
+            case 3:
+                printf("Saindo do Menu do Cliente...\n");
+                break;
+            default:
+                printf("Opção inválida!\n");
+        }
+    } while(opcaoCliente != 3);
+}
+
+void areaCliente(int index) {
+    int opcaoArea;
+
+    do {
+        printf("\n--- Área do Cliente ---\n");
+        printf("1. Atualizar informações\n");
+        printf("2. Ver saldo (Exemplo)\n");
+        printf("3. Voltar ao menu anterior\n");
+        printf("Escolha uma opção: ");
+        scanf("%d", &opcaoArea);
+
+        switch(opcaoArea) {
+            case 1:
+                printf("Atualizando informações para %s...\n", usuarios[index].nome);
+                // Adicione a lógica de atualização de informações
+                break;
+            case 2:
+                printf("Exibindo saldo do cliente %s...\n", usuarios[index].nome);
+                // Exemplo de função de saldo
+                break;
+            case 3:
+                printf("Voltando ao menu do cliente...\n");
+                break;
+            default:
+                printf("Opção inválida!\n");
+        }
+    } while(opcaoArea != 3);
 }
