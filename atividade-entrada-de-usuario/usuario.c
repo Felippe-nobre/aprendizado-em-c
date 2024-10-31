@@ -9,7 +9,7 @@
 typedef struct {
     char nome[MAX_NOME];
     char senha[MAX_SENHA];
-    // Podemos adicionar mais informações se necessário
+   
 } Usuario;
 
 void cadastrarUsuario();
@@ -222,11 +222,11 @@ void areaCliente(int index) {
         switch(opcaoArea) {
             case 1:
                 printf("Atualizando informações para %s...\n", usuarios[index].nome);
-                // Adicione a lógica de atualização de informações
+                
                 break;
             case 2:
                 printf("Exibindo saldo do cliente %s...\n", usuarios[index].nome);
-                // Exemplo de função de saldo
+                
                 break;
             case 3:
                 printf("Voltando ao menu do cliente...\n");
