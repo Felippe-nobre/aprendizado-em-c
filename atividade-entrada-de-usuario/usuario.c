@@ -192,7 +192,7 @@ void menuCliente(int index) {
         printf("Escolha uma opção: ");
         scanf("%d", &opcaoCliente);
 
-        switch(opcaoCliente) {
+        switch(opcaoCliente) { 
             case 1:
                 printf("Exibindo perfil do cliente %s...\n", usuarios[index].nome);
                 break;
